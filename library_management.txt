@@ -1,0 +1,69 @@
+import pandas as pd
+import numpy as np
+
+datas=[]
+ind_ls=[]
+#df = pd.DataFrame(datas, columns='Book_number Book_name Author'.split())
+#df.to_csv(r'C:\Users\hp\Desktop\all books.csv',  index = True)
+def add_new_book():
+    book_num = input("Enter book number")
+    book_name = input("Enter name of the book")
+    auth=input("Enter name of the author")
+    d=[book_num,book_name,auth]
+    datas.append(d)
+    df = pd.DataFrame(datas, columns='Book_number Book_name Author'.split())
+    df.to_csv(r'C:\Users\hp\Desktop\all books.csv',  mode='a', header=False)
+
+def all_book_list():
+    dfread=pd.read_csv(r'C:\Users\hp\Desktop\all books.csv',index_col=0)
+    print(dfread)
+def update_book():
+    print("1.Update book name.")
+    print("2.Update book author.")
+    ch = int(input("Provide your choice: "))
+    df = pd.read_csv(r'C:\Users\hp\Desktop\all books.csv',index_col=0)
+    if ch==1:
+        num = int(input("Enter book number: "))
+        name = input("Enter book name which you want to update:-")
+        df.loc[df['Book_number'] == num, 'Book_name'] = name
+        print(df)
+    else:
+        num = int(input("Enter book number: "))
+        author = input("Enter book author which you want to update: ")
+        df.loc[df['Book_number'] == num, 'Author'] = author
+        print(df)
+def search_book():
+    dfread = pd.read_csv(r'C:\Users\hp\Desktop\all books.csv',index_col=0)
+    print("1.Search by book number: ")
+    print("2.Search by book name: ")
+    print("3.Search by book author: ")
+    ch = int(input("Provide your choice: "))
+    if ch==1:
+        num = int(input("Enter book number: "))
+        print(dfread[dfread["Book_number"]==num])
+    elif ch==2:
+        name = (input("Enter book name: "))
+        print(dfread[dfread["Book_name"] == name])
+    elif ch==3:
+        author = (input("Enter book author: "))
+        print(dfread[dfread["Author"] == author])
+    else:
+        print("Invalid choice...!!!")
+while True:
+    print("1-Add new book")
+    print("2-All book list:")
+    print("3-search")
+    print("4-Update")
+    print("5-Exit")
+    ch = int(input("Provide your choice"))
+    if ch == 1:
+        add_new_book()
+    if ch == 2:
+        all_book_list()
+    if ch == 3:
+        search_book()
+    if ch == 4:
+        update_book()
+    if ch == 5:
+        exit(0)
+
